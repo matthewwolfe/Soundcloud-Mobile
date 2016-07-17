@@ -7,17 +7,36 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
+    
+    var audioPlayer = AVAudioPlayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let downloader = Downloader(callback: {(url: NSURL) in
+            self.playSound(url)
+        })
+    }
+    
+    func playSound(url: NSURL){
+        print(url)
+        
+        do{
+            self.audioPlayer = try AVAudioPlayer(contentsOfURL: url)
+            self.audioPlayer.prepareToPlay()
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            self.audioPlayer.play()
+            print("playing")
+        } catch {
+            print("Error getting the audio file")
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 

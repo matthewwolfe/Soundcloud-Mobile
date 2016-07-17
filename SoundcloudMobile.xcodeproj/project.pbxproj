@@ -13,6 +13,7 @@
 		FD6CEFA01D3AD1930051646F /* SoundcloudMobile.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FD6CEF9E1D3AD1930051646F /* SoundcloudMobile.xcdatamodeld */; };
 		FD6CEFA21D3AD1930051646F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD6CEFA11D3AD1930051646F /* Assets.xcassets */; };
 		FD6CEFA51D3AD1930051646F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6CEFA31D3AD1930051646F /* LaunchScreen.storyboard */; };
+		FD6CEFAF1D3AD2B90051646F /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6CEFAE1D3AD2B90051646F /* Downloader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		FD6CEFA11D3AD1930051646F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FD6CEFA41D3AD1930051646F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FD6CEFA61D3AD1930051646F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FD6CEFAE1D3AD2B90051646F /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		FD6CEF961D3AD1920051646F /* SoundcloudMobile */ = {
 			isa = PBXGroup;
 			children = (
+				FD6CEFAD1D3AD29C0051646F /* Downloader */,
 				FD6CEF971D3AD1920051646F /* AppDelegate.swift */,
 				FD6CEF991D3AD1920051646F /* ViewController.swift */,
 				FD6CEF9B1D3AD1930051646F /* Main.storyboard */,
@@ -65,6 +68,14 @@
 				FD6CEF9E1D3AD1930051646F /* SoundcloudMobile.xcdatamodeld */,
 			);
 			path = SoundcloudMobile;
+			sourceTree = "<group>";
+		};
+		FD6CEFAD1D3AD29C0051646F /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				FD6CEFAE1D3AD2B90051646F /* Downloader.swift */,
+			);
+			name = Downloader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,6 +110,7 @@
 				TargetAttributes = {
 					FD6CEF931D3AD1910051646F = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = T48TE3XG86;
 					};
 				};
 			};
@@ -140,6 +152,7 @@
 			files = (
 				FD6CEFA01D3AD1930051646F /* SoundcloudMobile.xcdatamodeld in Sources */,
 				FD6CEF9A1D3AD1920051646F /* ViewController.swift in Sources */,
+				FD6CEFAF1D3AD2B90051646F /* Downloader.swift in Sources */,
 				FD6CEF981D3AD1920051646F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,10 +266,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SoundcloudMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.matthew.wolfe.SoundcloudMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -264,10 +280,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SoundcloudMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.matthew.wolfe.SoundcloudMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -290,6 +309,7 @@
 				FD6CEFAB1D3AD1930051646F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
