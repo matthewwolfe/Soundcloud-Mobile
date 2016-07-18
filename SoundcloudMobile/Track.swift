@@ -9,12 +9,12 @@
 import Foundation
 
 struct Track {
-    let name: String
+    let title: String
     let url: NSURL
     let duration: Double
     
-    init(name: String, url: NSURL, duration: Double){
-        self.name = name
+    init(title: String, url: NSURL, duration: Double){
+        self.title = title
         self.url = url
         self.duration = duration
     }

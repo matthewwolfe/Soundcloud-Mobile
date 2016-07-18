@@ -8,12 +8,14 @@
 
 import Foundation
 import AVFoundation
+import CoreMedia
 
 class Downloader {
     let documentsDirectory: NSURL
     var files: NSMutableArray
     var filePaths: [NSURL]
-    var audioPlayer: AVAudioPlayer!
+
+    var localTracks: [Track] = []
     
     let hostURL: String = "http://192.168.1.5:3000/music/"
     
@@ -22,8 +24,11 @@ class Downloader {
         self.files = []
         self.filePaths = []
         
+        self.localTracks = self.getLocalTracks()
+        
+        /*
         self.loadFiles({(response: Bool) in
-            
+ 
             print(self.documentsDirectory, terminator: "\n\n")
             print(self.filePaths[0], terminator: "\n\n")
             
@@ -31,7 +36,50 @@ class Downloader {
                 callback(self.filePaths[0])
             }
         })
+ */
 
+    }
+    
+    /**
+        This function searches for mp3 files in the documents directory and returns a Track array
+        containing the local files
+     
+        :returns: An array containing the local tracks, of the type Track
+    */
+    func getLocalTracks() -> [Track] {
+        var tracks = [Track]()
+        
+        do {
+            // Get the directory contents urls (including subfolders urls)
+            let directoryContents = try NSFileManager
+                                        .defaultManager()
+                                        .contentsOfDirectoryAtURL(self.documentsDirectory, includingPropertiesForKeys: nil, options: [])
+            
+            let mp3FileNames = directoryContents
+                               .filter{$0.pathExtension == "mp3"}
+                               .flatMap{$0.URLByDeletingPathExtension?.lastPathComponent}
+            
+        
+            let mp3FilePaths = directoryContents
+                               .filter{$0.pathExtension == "mp3"}
+                               .map{self.documentsDirectory.URLByAppendingPathComponent($0.lastPathComponent!)}
+            
+            for (index, element) in mp3FileNames.enumerate() {
+                let audioAsset = AVURLAsset(URL: mp3FilePaths[index], options: nil)
+                
+                let track = Track(
+                    title: mp3FileNames[index],
+                    url: mp3FilePaths[index],
+                    duration: audioAsset.duration.seconds
+                )
+                
+                tracks.append(track)
+            }
+        } catch {
+            print("Error setting local tracks")
+        }
+        
+        return tracks
     }
     
     func loadFiles(callback: (Bool) -> ()) -> Void {
