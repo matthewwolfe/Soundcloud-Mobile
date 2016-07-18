@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD518FD11D3C5F2A007569B5 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD518FD01D3C5F2A007569B5 /* Track.swift */; };
 		FD6CEF981D3AD1920051646F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6CEF971D3AD1920051646F /* AppDelegate.swift */; };
 		FD6CEF9A1D3AD1920051646F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6CEF991D3AD1920051646F /* ViewController.swift */; };
 		FD6CEF9D1D3AD1930051646F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6CEF9B1D3AD1930051646F /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD518FD01D3C5F2A007569B5 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		FD6CEF941D3AD1910051646F /* SoundcloudMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundcloudMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD6CEF971D3AD1920051646F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD6CEF991D3AD1920051646F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +41,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FD518FCF1D3C5F0C007569B5 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				FD518FD01D3C5F2A007569B5 /* Track.swift */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
 		FD6CEF8B1D3AD1910051646F = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +68,7 @@
 		FD6CEF961D3AD1920051646F /* SoundcloudMobile */ = {
 			isa = PBXGroup;
 			children = (
+				FD518FCF1D3C5F0C007569B5 /* Core */,
 				FD6CEFAD1D3AD29C0051646F /* Downloader */,
 				FD6CEF971D3AD1920051646F /* AppDelegate.swift */,
 				FD6CEF991D3AD1920051646F /* ViewController.swift */,
@@ -151,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD6CEFA01D3AD1930051646F /* SoundcloudMobile.xcdatamodeld in Sources */,
+				FD518FD11D3C5F2A007569B5 /* Track.swift in Sources */,
 				FD6CEF9A1D3AD1920051646F /* ViewController.swift in Sources */,
 				FD6CEFAF1D3AD2B90051646F /* Downloader.swift in Sources */,
 				FD6CEF981D3AD1920051646F /* AppDelegate.swift in Sources */,

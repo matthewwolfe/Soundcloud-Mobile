@@ -24,6 +24,9 @@ class Downloader {
         
         self.loadFiles({(response: Bool) in
             
+            print(self.documentsDirectory, terminator: "\n\n")
+            print(self.filePaths[0], terminator: "\n\n")
+            
             if response {
                 callback(self.filePaths[0])
             }
