@@ -1,29 +1,23 @@
 //
-//  ViewController.swift
+//  Player.swift
 //  SoundcloudMobile
 //
-//  Created by Matthew Wolfe on 7/16/16.
+//  Created by Matthew Wolfe on 7/23/16.
 //  Copyright © 2016 Matthew Wolfe. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import AVFoundation
 
-class ViewController: UIViewController {
+class Player {
     
-    var audioPlayer = AVAudioPlayer()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let downloader = Downloader(callback: {(url: NSURL) in
-            self.playSound(url)
-        })
+    var audioPlayer: AVAudioPlayer
+    
+    init(){
+        self.audioPlayer = AVAudioPlayer()
     }
     
-    func playSound(url: NSURL){
-        print(url)
-        
+    func play(url: NSURL) -> Void {
         do{
             self.audioPlayer = try AVAudioPlayer(contentsOfURL: url)
             self.audioPlayer.prepareToPlay()
@@ -34,11 +28,16 @@ class ViewController: UIViewController {
             print("Error getting the audio file")
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    
+    func stop() -> Void {
+        self.audioPlayer.stop()
     }
-
-
+    
+    func pause() -> Void {
+        self.audioPlayer.pause()
+    }
+    
+    func volume(newVolume: Float) -> Void {
+        self.audioPlayer.volume = newVolume
+    }
 }
-

@@ -16,28 +16,28 @@ class Downloader {
     var filePaths: [NSURL]
 
     var localTracks: [Track] = []
+    var remoteTracks: [Track] = []
     
     let hostURL: String = "http://192.168.1.5:3000/music/"
     
-    init(callback: (NSURL) -> ()){
+    init(){
+        self.documentsDirectory = NSURL()
+        self.files = []
+        self.filePaths = []
+        self.localTracks = []
+        self.remoteTracks = []
+    }
+    
+    init(callback: () -> ()){
         self.documentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
         self.files = []
         self.filePaths = []
         
         self.localTracks = self.getLocalTracks()
         
-        /*
-        self.loadFiles({(response: Bool) in
- 
-            print(self.documentsDirectory, terminator: "\n\n")
-            print(self.filePaths[0], terminator: "\n\n")
-            
-            if response {
-                callback(self.filePaths[0])
-            }
+        self.getRemoteTracks({() in
+            callback()
         })
- */
-
     }
     
     /**
@@ -64,7 +64,7 @@ class Downloader {
                                .filter{$0.pathExtension == "mp3"}
                                .map{self.documentsDirectory.URLByAppendingPathComponent($0.lastPathComponent!)}
             
-            for (index, element) in mp3FileNames.enumerate() {
+            for (index, _) in mp3FileNames.enumerate() {
                 let audioAsset = AVURLAsset(URL: mp3FilePaths[index], options: nil)
                 
                 let track = Track(
@@ -80,6 +80,27 @@ class Downloader {
         }
         
         return tracks
+    }
+    
+    func getRemoteTracks(callback: () -> ()) -> Void {
+        
+        self.request({(json: [String: NSArray]) in
+            
+            for track in json["tracks"]! {
+                let urlString = self.hostURL + (track["title"] as! String)
+                let url = NSURL(string: urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
+                
+                let duration = Int(track["duration"] as! String)!
+                
+                self.remoteTracks.append(Track(title: track["title"] as! String, url: url!, duration: self.millisToSeconds(duration)))
+            }
+
+            callback()
+        })
+    }
+    
+    func millisToSeconds(millis: Int) -> Double {
+        return Double(millis) / 1000.0
     }
     
     func loadFiles(callback: (Bool) -> ()) -> Void {

@@ -20,6 +20,17 @@ struct Track {
     }
     
     func getDuration() -> String {
-        return "\(self.duration / 3600):\((self.duration % 3600) / 60):\((self.duration % 3600) % 60)"
+        let hours = Int(self.duration / 3600)
+        let minutes = Int(((self.duration % 3600) / 60))
+        let seconds = Int(((self.duration % 3600) % 60))
+        
+        let formatter = NSNumberFormatter()
+        formatter.minimumIntegerDigits = 2
+        
+        if hours == 0 {
+            return "\(formatter.stringFromNumber(minutes)!):\(formatter.stringFromNumber(seconds)!)"
+        } else {
+            return "\(formatter.stringFromNumber(hours)!):\(formatter.stringFromNumber(minutes)!):\(formatter.stringFromNumber(seconds)!)"
+        }
     }
 }
