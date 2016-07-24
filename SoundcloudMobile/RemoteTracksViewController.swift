@@ -8,13 +8,15 @@
 
 import UIKit
 
-class TracksViewController: UITableViewController {
+class RemoteTracksViewController: UITableViewController {
     
     var controller: Controller = Controller()
     var tracks:[Track] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.contentInset.top = 20
         
         self.controller = Controller(callback: {() in
             self.tracks = self.controller.downloader.remoteTracks

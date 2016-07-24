@@ -14,7 +14,8 @@
 		FD6CEFA21D3AD1930051646F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD6CEFA11D3AD1930051646F /* Assets.xcassets */; };
 		FD6CEFA51D3AD1930051646F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6CEFA31D3AD1930051646F /* LaunchScreen.storyboard */; };
 		FD6CEFAF1D3AD2B90051646F /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6CEFAE1D3AD2B90051646F /* Downloader.swift */; };
-		FDD413D81D442E2600F7068B /* TracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD413D71D442E2600F7068B /* TracksViewController.swift */; };
+		FDAF6D5F1D452FEE005AE10B /* LocalTracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF6D5E1D452FEE005AE10B /* LocalTracksViewController.swift */; };
+		FDD413D81D442E2600F7068B /* RemoteTracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD413D71D442E2600F7068B /* RemoteTracksViewController.swift */; };
 		FDD413DC1D442E9C00F7068B /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD413DB1D442E9C00F7068B /* SampleData.swift */; };
 		FDD413DE1D44310A00F7068B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD413DD1D44310A00F7068B /* Player.swift */; };
 		FDD413E01D44323C00F7068B /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD413DF1D44323C00F7068B /* Controller.swift */; };
@@ -30,7 +31,8 @@
 		FD6CEFA41D3AD1930051646F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FD6CEFA61D3AD1930051646F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD6CEFAE1D3AD2B90051646F /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
-		FDD413D71D442E2600F7068B /* TracksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksViewController.swift; sourceTree = "<group>"; };
+		FDAF6D5E1D452FEE005AE10B /* LocalTracksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTracksViewController.swift; sourceTree = "<group>"; };
+		FDD413D71D442E2600F7068B /* RemoteTracksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteTracksViewController.swift; sourceTree = "<group>"; };
 		FDD413DB1D442E9C00F7068B /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		FDD413DD1D44310A00F7068B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FDD413DF1D44323C00F7068B /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
@@ -78,14 +80,15 @@
 			children = (
 				FD518FCF1D3C5F0C007569B5 /* Core */,
 				FD6CEFAD1D3AD29C0051646F /* Downloader */,
-				FD6CEF971D3AD1920051646F /* AppDelegate.swift */,
+				FDD413D71D442E2600F7068B /* RemoteTracksViewController.swift */,
+				FDAF6D5E1D452FEE005AE10B /* LocalTracksViewController.swift */,
 				FD6CEF9B1D3AD1930051646F /* Main.storyboard */,
-				FDD413D71D442E2600F7068B /* TracksViewController.swift */,
-				FD6CEFA11D3AD1930051646F /* Assets.xcassets */,
+				FDD413DB1D442E9C00F7068B /* SampleData.swift */,
+				FD6CEF971D3AD1920051646F /* AppDelegate.swift */,
 				FD6CEFA31D3AD1930051646F /* LaunchScreen.storyboard */,
+				FD6CEFA11D3AD1930051646F /* Assets.xcassets */,
 				FD6CEFA61D3AD1930051646F /* Info.plist */,
 				FD6CEF9E1D3AD1930051646F /* SoundcloudMobile.xcdatamodeld */,
-				FDD413DB1D442E9C00F7068B /* SampleData.swift */,
 			);
 			path = SoundcloudMobile;
 			sourceTree = "<group>";
@@ -170,10 +173,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDD413D81D442E2600F7068B /* TracksViewController.swift in Sources */,
+				FDD413D81D442E2600F7068B /* RemoteTracksViewController.swift in Sources */,
 				FDD413DC1D442E9C00F7068B /* SampleData.swift in Sources */,
 				FD6CEFA01D3AD1930051646F /* SoundcloudMobile.xcdatamodeld in Sources */,
 				FD518FD11D3C5F2A007569B5 /* Track.swift in Sources */,
+				FDAF6D5F1D452FEE005AE10B /* LocalTracksViewController.swift in Sources */,
 				FDD413DE1D44310A00F7068B /* Player.swift in Sources */,
 				FD6CEFAF1D3AD2B90051646F /* Downloader.swift in Sources */,
 				FD6CEF981D3AD1920051646F /* AppDelegate.swift in Sources */,
