@@ -17,9 +17,9 @@ class Player {
         self.audioPlayer = AVAudioPlayer()
     }
     
-    func play(url: NSURL) -> Void {
+    func play(_ url: URL) -> Void {
         do{
-            self.audioPlayer = try AVAudioPlayer(contentsOfURL: url)
+            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
             self.audioPlayer.prepareToPlay()
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             self.audioPlayer.play()
@@ -37,7 +37,7 @@ class Player {
         self.audioPlayer.pause()
     }
     
-    func volume(newVolume: Float) -> Void {
+    func volume(_ newVolume: Float) -> Void {
         self.audioPlayer.volume = newVolume
     }
 }

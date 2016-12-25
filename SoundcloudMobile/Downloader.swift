@@ -11,9 +11,9 @@ import AVFoundation
 import CoreMedia
 
 class Downloader {
-    let documentsDirectory: NSURL
+    let documentsDirectory: URL
     var files: NSMutableArray
-    var filePaths: [NSURL]
+    var filePaths: [URL]
 
     var localTracks: [Track] = []
     var remoteTracks: [Track] = []
@@ -21,15 +21,15 @@ class Downloader {
     let hostURL: String = "http://192.168.1.5:3000/music/"
     
     init(){
-        self.documentsDirectory = NSURL()
+        self.documentsDirectory = URL()
         self.files = []
         self.filePaths = []
         self.localTracks = []
         self.remoteTracks = []
     }
     
-    init(callback: () -> ()){
-        self.documentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+    init(callback: @escaping () -> ()){
+        self.documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
         self.files = []
         self.filePaths = []
         
@@ -51,21 +51,20 @@ class Downloader {
         
         do {
             // Get the directory contents urls (including subfolders urls)
-            let directoryContents = try NSFileManager
-                                        .defaultManager()
-                                        .contentsOfDirectoryAtURL(self.documentsDirectory, includingPropertiesForKeys: nil, options: [])
+            let directoryContents = try FileManager.default
+                                        .contentsOfDirectory(at: self.documentsDirectory, includingPropertiesForKeys: nil, options: [])
             
             let mp3FileNames = directoryContents
                                .filter{$0.pathExtension == "mp3"}
-                               .flatMap{$0.URLByDeletingPathExtension?.lastPathComponent}
+                               .flatMap{$0.deletingPathExtension().lastPathComponent}
             
         
             let mp3FilePaths = directoryContents
                                .filter{$0.pathExtension == "mp3"}
-                               .map{self.documentsDirectory.URLByAppendingPathComponent($0.lastPathComponent!)}
+                               .map{self.documentsDirectory.appendingPathComponent($0.lastPathComponent)}
             
-            for (index, _) in mp3FileNames.enumerate() {
-                let audioAsset = AVURLAsset(URL: mp3FilePaths[index], options: nil)
+            for (index, _) in mp3FileNames.enumerated() {
+                let audioAsset = AVURLAsset(url: mp3FilePaths[index], options: nil)
                 
                 let track = Track(
                     title: mp3FileNames[index],
@@ -82,13 +81,13 @@ class Downloader {
         return tracks
     }
     
-    func getRemoteTracks(callback: () -> ()) -> Void {
+    func getRemoteTracks(_ callback: @escaping () -> ()) -> Void {
         
         self.request({(json: [String: NSArray]) in
             
             for track in json["tracks"]! {
                 let urlString = self.hostURL + (track["title"] as! String)
-                let url = NSURL(string: urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
+                let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
                 
                 let duration = Int(track["duration"] as! String)!
                 
@@ -99,16 +98,16 @@ class Downloader {
         })
     }
     
-    func millisToSeconds(millis: Int) -> Double {
+    func millisToSeconds(_ millis: Int) -> Double {
         return Double(millis) / 1000.0
     }
     
-    func loadFiles(callback: (Bool) -> ()) -> Void {
+    func loadFiles(_ callback: @escaping (Bool) -> ()) -> Void {
         
         self.request({(json: [String: NSArray]) in
             
             for track in json["tracks"]! {
-                self.files.addObject(track["title"] as! String)
+                self.files.add(track["title"] as! String)
             }
             
             var completedFiles: Int = 0
@@ -127,27 +126,27 @@ class Downloader {
         })
     }
     
-    func get(urlString: String, callback: () -> ()) -> Void {
-        let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+    func get(_ urlString: String, callback: @escaping () -> ()) -> Void {
+        let url = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
 
-        if let audioUrl = NSURL(string: url){
+        if let audioUrl = URL(string: url){
             
-            let destinationUrl = self.documentsDirectory.URLByAppendingPathComponent(audioUrl.lastPathComponent! + ".mp3")
+            let destinationUrl = self.documentsDirectory.appendingPathComponent(audioUrl.lastPathComponent + ".mp3")
             
             // if the file already exists, we can just return now
-            if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
+            if FileManager().fileExists(atPath: destinationUrl.path) {
                 callback()
                 
             // if the file doesn't exist
             } else {
                 
                 // you can use NSURLSession.sharedSession to download the data asynchronously
-                NSURLSession.sharedSession().downloadTaskWithURL(audioUrl, completionHandler: { (location, response, error) -> Void in
-                    guard let location = location where error == nil else { return }
+                URLSession.shared.downloadTask(with: audioUrl, completionHandler: { (location, response, error) -> Void in
+                    guard let location = location, error == nil else { return }
                     
                     do {
                         // after downloading your file you need to move it to your destination url
-                        try NSFileManager().moveItemAtURL(location, toURL: destinationUrl)
+                        try FileManager().moveItem(at: location, to: destinationUrl)
                         self.filePaths.append(destinationUrl)
                         callback()
                     } catch let error as NSError {
@@ -158,19 +157,19 @@ class Downloader {
         }
     }
     
-    func request(callback: ([String:NSArray]) -> ()){
+    func request(_ callback: @escaping ([String:NSArray]) -> ()){
         let urlPath: String = "http://192.168.1.5:3000/get_tracks"
-        let url: NSURL = NSURL(string: urlPath)!
-        let request: NSMutableURLRequest = NSMutableURLRequest(URL: url)
+        let url: URL = URL(string: urlPath)!
+        let request: NSMutableURLRequest = NSMutableURLRequest(url: url)
         
-        request.HTTPMethod = "GET"
+        request.httpMethod = "GET"
         request.timeoutInterval = 60
-        request.HTTPShouldHandleCookies = false
+        request.httpShouldHandleCookies = false
         
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{data, response, error -> Void in
+        let task = URLSession.shared.dataTask(with: request, completionHandler:{data, response, error -> Void in
             
             // Handle incoming data like you would in synchronous request
-            let reply = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
+            let reply = NSString(data: data!, encoding: String.Encoding.utf8)! as String
             
             callback(self.convertStringToDictionary(reply))
         })
@@ -179,10 +178,10 @@ class Downloader {
         
     }
     
-    func convertStringToDictionary(text: String) -> [String:NSArray] {
-        if let data = text.dataUsingEncoding(NSUTF8StringEncoding) {
+    func convertStringToDictionary(_ text: String) -> [String:NSArray] {
+        if let data = text.data(using: String.Encoding.utf8) {
             do {
-                return try (NSJSONSerialization.JSONObjectWithData(data, options: []) as! [String:NSArray])
+                return try (JSONSerialization.jsonObject(with: data, options: []) as! [String:NSArray])
             } catch let error as NSError {
                 print(error)
             }

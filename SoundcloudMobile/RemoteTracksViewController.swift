@@ -21,7 +21,7 @@ class RemoteTracksViewController: UITableViewController {
         self.controller = Controller(callback: {() in
             self.tracks = self.controller.downloader.remoteTracks
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 self.tableView.reloadData()
             })
         })
@@ -31,17 +31,17 @@ class RemoteTracksViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tracks.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
         -> UITableViewCell {
-            let cell = tableView.dequeueReusableCellWithIdentifier("TrackCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell", for: indexPath)
             
             let track = tracks[indexPath.row] as Track
             cell.textLabel?.text = track.title

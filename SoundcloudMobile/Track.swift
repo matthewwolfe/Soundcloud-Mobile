@@ -10,10 +10,10 @@ import Foundation
 
 struct Track {
     let title: String
-    let url: NSURL
+    let url: URL
     let duration: Double
     
-    init(title: String, url: NSURL, duration: Double){
+    init(title: String, url: URL, duration: Double){
         self.title = title
         self.url = url
         self.duration = duration
@@ -21,16 +21,16 @@ struct Track {
     
     func getDuration() -> String {
         let hours = Int(self.duration / 3600)
-        let minutes = Int(((self.duration % 3600) / 60))
-        let seconds = Int(((self.duration % 3600) % 60))
+        let minutes = Int(((self.duration.truncatingRemainder(dividingBy: 3600)) / 60))
+        let seconds = Int(((self.duration % 3600).truncatingRemainder(dividingBy: 60)))
         
-        let formatter = NSNumberFormatter()
+        let formatter = NumberFormatter()
         formatter.minimumIntegerDigits = 2
         
         if hours == 0 {
-            return "\(formatter.stringFromNumber(minutes)!):\(formatter.stringFromNumber(seconds)!)"
+            return "\(formatter.string(from: NSNumber(minutes))!):\(formatter.string(from: seconds)!)"
         } else {
-            return "\(formatter.stringFromNumber(hours)!):\(formatter.stringFromNumber(minutes)!):\(formatter.stringFromNumber(seconds)!)"
+            return "\(formatter.string(from: NSNumber(hours))!):\(formatter.string(from: minutes)!):\(formatter.string(from: seconds)!)"
         }
     }
 }
